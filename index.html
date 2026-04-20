@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>手势魔法阵绘制台</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="layout">
+      <section class="panel">
+        <h1>手势魔法阵绘制台</h1>
+        <p>
+          允许摄像头后，用食指指尖在空气中绘制魔法阵。将食指与拇指靠近可进入“绘制模式”，张开可暂停。
+        </p>
+        <ul>
+          <li>🪄 手势识别：MediaPipe Hands（单手）</li>
+          <li>✨ 轨迹拖尾：多层渐隐粒子 + 发光描边</li>
+          <li>🎨 视觉特效：动态符文圆环、星芒、能量脉冲</li>
+        </ul>
+        <div class="status-row">
+          <span id="statusBadge" class="badge">等待摄像头权限</span>
+          <button id="clearBtn" type="button">清空魔法阵</button>
+        </div>
+      </section>
+
+      <section class="stage-wrap">
+        <video id="camera" autoplay playsinline muted></video>
+        <canvas id="overlay"></canvas>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
