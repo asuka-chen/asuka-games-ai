@@ -1,0 +1,48 @@
+{
+  "version": "0.5.0",
+  "archive": "Star-Abyss-Windows-x64.zip",
+  "sha256": "767e56850ecd59e3faabd6b13b40c92687f078614b8445027a6b9cc82261c8ad",
+  "bytes": 158575366,
+  "parts": [
+    {
+      "name": "Star-Abyss-Windows-x64.zip.part01",
+      "sha256": "ed43aabb29a52398c21ba93c4c0ebd3bb0a9a45da76b3ca4ac31e961208cb65a",
+      "bytes": 20971520
+    },
+    {
+      "name": "Star-Abyss-Windows-x64.zip.part02",
+      "sha256": "1bef038c1e4a1800303a780f1f14ea6ce1425b6e065bf160cfdb2b67bcb9fd77",
+      "bytes": 20971520
+    },
+    {
+      "name": "Star-Abyss-Windows-x64.zip.part03",
+      "sha256": "89ebc1f920377898bd6f59f3d5c60bd4a8c065d52c286a81eabe14cac8239be1",
+      "bytes": 20971520
+    },
+    {
+      "name": "Star-Abyss-Windows-x64.zip.part04",
+      "sha256": "485ec0bd99bf09de6976857518dbbe4af328ce29cbda5312121d20958aef4c2d",
+      "bytes": 20971520
+    },
+    {
+      "name": "Star-Abyss-Windows-x64.zip.part05",
+      "sha256": "d8ad11cb117a3b5609b2ce935c4cea265b4ead2f942f055b6f2104b9ab882dc9",
+      "bytes": 20971520
+    },
+    {
+      "name": "Star-Abyss-Windows-x64.zip.part06",
+      "sha256": "f097731fae5f229e0b3e618ccc0e6ba21ac7be4151475f7cf1a6c841a1d238f6",
+      "bytes": 20971520
+    },
+    {
+      "name": "Star-Abyss-Windows-x64.zip.part07",
+      "sha256": "869084dc8214b4080dd896e3ac76c9c0b9f103e89226ffb2efc4c99cd5ec4b93",
+      "bytes": 20971520
+    },
+    {
+      "name": "Star-Abyss-Windows-x64.zip.part08",
+      "sha256": "d2f4f10c32fa8b01e8a6abf2335c5146e0371921386a090b8db7a429ed53b47b",
+      "bytes": 11774726
+    }
+  ]
+}
