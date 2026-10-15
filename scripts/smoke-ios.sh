@@ -1,6 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 cd "$(dirname "$0")/.."
+mkdir -p releases
+exec > >(tee releases/ios-simulator.log) 2>&1
 task_ios_simulator_build="$(pwd)/releases/ios-simulator-build"
 xcodebuild -project native/ios/StarAbyss.xcodeproj -scheme StarAbyss -configuration Debug -sdk iphonesimulator -destination generic/platform=iOS\ Simulator -derivedDataPath "$task_ios_simulator_build" CODE_SIGNING_ALLOWED=NO build
 # Use a runtime already installed on the Mac runner; do not download an SDK.

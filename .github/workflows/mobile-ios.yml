@@ -17,6 +17,7 @@ jobs:
       - name: Build offline iOS app and unsigned IPA
         run: bash scripts/build-ios.sh
       - name: Launch the real app in iPhone Simulator
+        timeout-minutes: 8
         run: bash scripts/smoke-ios.sh
       - name: Publish downloadable native artifacts
         if: always()
@@ -44,19 +45,10 @@ jobs:
           python3 scripts/setup-android.py
           python3 scripts/build-android.py
       - name: Boot Android emulator
-        run: |
-          sudo chmod a+rw /dev/kvm
-          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'system-images;android-35;google_apis;x86_64'
-          echo no | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd --name star-abyss-qa --package 'system-images;android-35;google_apis;x86_64' --device pixel_5
-          "$ANDROID_HOME/emulator/emulator" -avd star-abyss-qa -no-window -no-audio -no-boot-anim -no-snapshot -gpu swiftshader_indirect -memory 2048 -no-metrics > /tmp/star-abyss-emulator.log 2>&1 &
-          "$ANDROID_HOME/platform-tools/adb" wait-for-device
-          for attempt in $(seq 1 120); do
-            if [ "$("$ANDROID_HOME/platform-tools/adb" shell getprop sys.boot_completed | tr -d '\r')" = 1 ]; then break; fi
-            sleep 2
-          done
-          test "$("$ANDROID_HOME/platform-tools/adb" shell getprop sys.boot_completed | tr -d '\r')" = 1
+        timeout-minutes: 8
+        run: bash scripts/boot-android-emulator.sh
       - name: Verify native touch combat
-        run: python3 scripts/smoke-android.py
+        run: python3 scripts/smoke-android.py 2>&1 | tee releases/android-smoke.log
       - name: Publish native Android screenshots
         if: always()
         env:

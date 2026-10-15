@@ -6,7 +6,7 @@ ROOT=Path(__file__).resolve().parent.parent;kind=sys.argv[1]
 assert kind in ['ios','android']
 repository=os.environ['GITHUB_REPOSITORY'];run_id=os.environ['GITHUB_RUN_ID'];commit_sha=os.environ['GITHUB_SHA'];token=os.environ['GITHUB_TOKEN']
 assert repository=='asuka-chen/asuka-games-ai' and run_id.isdigit()
-patterns=['Star-Abyss-iOS-*-unsigned.ipa','Star-Abyss-iOS-*-unsigned.ipa.sha256','ios-simulator.png'] if kind=='ios' else ['android-native-*.png','android-ui.xml']
+patterns=['Star-Abyss-iOS-*-unsigned.ipa','Star-Abyss-iOS-*-unsigned.ipa.sha256','ios-simulator.png','ios-simulator.log'] if kind=='ios' else ['android-native-*.png','android-ui.xml','android-*.log']
 files=sorted(set(p for pattern in patterns for p in (ROOT/'releases').glob(pattern)))
 assert files,'No native artifacts to publish'
 def api(path,data):
