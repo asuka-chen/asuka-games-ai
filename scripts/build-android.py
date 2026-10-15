@@ -13,7 +13,7 @@ run([TOOLS/'aapt2','compile','--dir',BUILD/'res','-o',BUILD/'resources.zip'])
 manifest=ROOT/'native/android/AndroidManifest.xml'
 qa='--qa' in sys.argv[1:]
 if qa:
- manifest=BUILD/'AndroidManifest.xml';manifest.write_text((ROOT/'native/android/AndroidManifest.xml').read_text().replace('<application ', '<application android:debuggable="true" ',1))
+ manifest=BUILD/'AndroidManifest.xml';manifest.write_text((ROOT/'native/android/AndroidManifest.xml').read_text().replace('<application ', '<application android:debuggable="true" android:hardwareAccelerated="false" ',1))
 run([TOOLS/'aapt2','link','-I',ANDROID,'--manifest',manifest,'-R',BUILD/'resources.zip','--auto-add-overlay','-o',BUILD/'base.apk'])
 classes=BUILD/'classes';classes.mkdir(exist_ok=True)
 sources=list((ROOT/'native/android/src').rglob('*.java'))

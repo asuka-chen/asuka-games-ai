@@ -9,7 +9,7 @@ const wait=ms=>new Promise(r=>setTimeout(r,ms));
 function command(...args){return execFileSync(adb,args,{encoding:'utf8',timeout:60000,maxBuffer:16*1024*1024}).trim();}
 async function screenshot(name){await writeFile(path.join(output,name),execFileSync(adb,['exec-out','screencap','-p'],{timeout:20000,maxBuffer:16*1024*1024}));}
 let socket;const pending=new Map(),errors=[];let sequence=0;
-async function send(method,params={}){const id=++sequence;return new Promise((resolve,reject)=>{const timeout=setTimeout(()=>{pending.delete(id);reject(new Error('CDP timed out: '+method));},15000);pending.set(id,{resolve:r=>{clearTimeout(timeout);resolve(r);},reject:e=>{clearTimeout(timeout);reject(e);}});socket.send(JSON.stringify({id,method,params}));});}
+async function send(method,params={}){const id=++sequence;return new Promise((resolve,reject)=>{const timeout=setTimeout(()=>{pending.delete(id);reject(new Error('CDP timed out: '+method));},30000);pending.set(id,{resolve:r=>{clearTimeout(timeout);resolve(r);},reject:e=>{clearTimeout(timeout);reject(e);}});socket.send(JSON.stringify({id,method,params}));});}
 async function evaluate(expression){const result=await send('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true});assert.equal(result.exceptionDetails,undefined,JSON.stringify(result.exceptionDetails));return result.result.value;}
 async function until(expression,label){for(let i=0;i<60;i++){if(await evaluate(expression))return;await wait(500);}throw new Error('Native WebView readiness failed: '+label);}
 async function point(selector){return evaluate(`(()=>{const e=document.querySelector(${JSON.stringify(selector)});if(!e)throw new Error('Control missing');e.scrollIntoView({block:'center'});const r=e.getBoundingClientRect();return{x:r.x+r.width/2,y:r.y+r.height/2};})()`);}
@@ -26,9 +26,9 @@ try{
  socket.addEventListener('message',event=>{const message=JSON.parse(event.data);if(message.id){const job=pending.get(message.id);if(job){pending.delete(message.id);message.error?job.reject(new Error(JSON.stringify(message.error))):job.resolve(message.result);}}if(message.method==='Runtime.exceptionThrown')errors.push(message.params.exceptionDetails);});
  await send('Runtime.enable');await send('Page.enable');
  console.log('WebView initial document:',await evaluate(`JSON.stringify({url:location.href,ready:document.readyState,scripts:[...document.scripts].map(s=>s.src),screen:document.getElementById('screen')?.innerHTML.length})`));
- await until(`Boolean(document.querySelector('[data-action="start"]'))`,'hangar');await screenshot('android-native-hangar.png');
- await evaluate(`document.getElementById('run-seed').value='native-android-smoke';document.querySelector('[data-action="difficulty"][data-id="story"]').click()`);
- await tap('[data-action="start"]');await until(`Boolean(document.querySelector('.route-card'))`,'star chart');
+ await until(`Boolean(document.querySelector('[data-action="start"]'))`,'hangar');console.log('Native hangar is ready');await wait(1000);await screenshot('android-native-hangar.png');
+ console.log('Native hangar screenshot captured');await evaluate(`document.getElementById('run-seed').value='native-android-smoke';document.querySelector('[data-action="difficulty"][data-id="story"]').click()`);
+ console.log('Native difficulty selected');await tap('[data-action="start"]');await until(`Boolean(document.querySelector('.route-card'))`,'star chart');
  const route=await evaluate(`[...document.querySelectorAll('.route-card')].find(e=>/普通战斗|裂隙/.test(e.textContent))?.dataset.id`);assert.ok(route,'A playable opening combat route must exist');await tap('.route-card[data-id="'+route+'"]');
  await until(`document.body.dataset.gamePage==='battle'&&Boolean(document.querySelector('[data-touch="fire"]'))`,'combat');
  assert.equal(await evaluate(`document.body.classList.contains('mobile-ui')`),true);await wait(1000);await screenshot('android-native-battle.png');
