@@ -4,6 +4,9 @@ on:
     branches:
       - 'star-abyss-mobile-build-v*'
   workflow_dispatch:
+concurrency:
+  group: star-abyss-native-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: write
 jobs:
