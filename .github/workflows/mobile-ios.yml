@@ -4,13 +4,11 @@ on:
     branches:
       - 'star-abyss-mobile-build-v*'
   workflow_dispatch:
-concurrency:
-  group: star-abyss-native-${{ github.ref }}
-  cancel-in-progress: true
 permissions:
   contents: write
 jobs:
   ios:
+    if: ${{ !contains(github.event.head_commit.message, '[android-only]') }}
     runs-on: macos-15
     timeout-minutes: 20
     steps:
@@ -37,6 +35,9 @@ jobs:
           if-no-files-found: error
           retention-days: 14
   android:
+    concurrency:
+      group: star-abyss-android-${{ github.ref }}
+      cancel-in-progress: true
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -47,13 +48,9 @@ jobs:
           node scripts/build-mobile.mjs
           python3 scripts/setup-android.py
           python3 scripts/build-android.py --qa
-      - name: Boot Android emulator
-        timeout-minutes: 8
+      - name: Boot Android and verify native touch combat
+        timeout-minutes: 10
         run: bash scripts/boot-android-emulator.sh
-      - name: Verify native touch combat
-        run: |
-          set -o pipefail
-          node scripts/smoke-android.mjs 2>&1 | tee releases/android-smoke.log
       - name: Publish native Android screenshots
         if: always()
         env:

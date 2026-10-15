@@ -1,7 +1,7 @@
 """Publish a separate, reviewable native-build branch without changing main."""
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
-import base64,hashlib,json,os,subprocess,tempfile
+import base64,hashlib,json,os,subprocess,tempfile,sys
 ROOT=Path(__file__).resolve().parent.parent;REPO='asuka-chen/asuka-games-ai';VERSION=json.loads((ROOT/'package.json').read_text())['version'];BRANCH='star-abyss-mobile-build-v'+VERSION
 def api(method,path,data=None,missing=False):
  environment=os.environ.copy();environment.pop('GH_DEBUG',None)
@@ -33,7 +33,7 @@ def upload(item):
  name,body=item;blob=api('POST',f'repos/{REPO}/git/blobs',{'content':base64.b64encode(body).decode(),'encoding':'base64'});assert blob['sha']==expected[name];return {'path':name,'mode':'100644','type':'blob','sha':blob['sha']}
 with ThreadPoolExecutor(max_workers=3) as pool:entries.extend(pool.map(upload,binary))
 tree=api('POST',f'repos/{REPO}/git/trees',{'tree':entries});remote=api('GET',f'repos/{REPO}/git/trees/{tree["sha"]}?recursive=1');assert not remote.get('truncated');actual={x['path']:x['sha'] for x in remote['tree'] if x['type']=='blob'};assert actual==expected
-commit=api('POST',f'repos/{REPO}/git/commits',{'message':f'Build Star Abyss {VERSION} Android and iOS offline apps','tree':tree['sha'],'parents':[existing['object']['sha']] if existing else []});state={'branch':BRANCH,'commit':commit['sha'],'tree':tree['sha']};stateFile.write_text(json.dumps(state,indent=2)+'\n')
+commit=api('POST',f'repos/{REPO}/git/commits',{'message':f'Build Star Abyss {VERSION} Android and iOS offline apps'+(' [android-only]' if '--android-only' in sys.argv else ''),'tree':tree['sha'],'parents':[existing['object']['sha']] if existing else []});state={'branch':BRANCH,'commit':commit['sha'],'tree':tree['sha']};stateFile.write_text(json.dumps(state,indent=2)+'\n')
 if existing:api('PATCH',f'repos/{REPO}/git/refs/heads/{BRANCH}',{'sha':commit['sha'],'force':False})
 else:api('POST',f'repos/{REPO}/git/refs',{'ref':'refs/heads/'+BRANCH,'sha':commit['sha']})
 print('Published verified native source:',BRANCH,commit['sha'],len(files),'files')
