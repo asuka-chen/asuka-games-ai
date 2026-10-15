@@ -28,6 +28,7 @@ public final class GameActivity extends Activity {
     getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     WindowManager.LayoutParams windowLayout=getWindow().getAttributes();windowLayout.layoutInDisplayCutoutMode=WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;getWindow().setAttributes(windowLayout);
     FrameLayout frame=new FrameLayout(this);frame.setBackgroundColor(Color.rgb(6,12,23));
+    if((getApplicationInfo().flags&android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE)!=0)WebView.setWebContentsDebuggingEnabled(true);
     game=new WebView(this);game.setBackgroundColor(Color.rgb(6,12,23));
     WebSettings settings=game.getSettings();settings.setJavaScriptEnabled(true);settings.setDomStorageEnabled(true);settings.setMediaPlaybackRequiresUserGesture(false);settings.setAllowFileAccess(false);settings.setAllowContentAccess(false);settings.setAllowFileAccessFromFileURLs(false);settings.setAllowUniversalAccessFromFileURLs(false);settings.setSupportZoom(false);settings.setBuiltInZoomControls(false);settings.setDisplayZoomControls(false);
     game.setWebChromeClient(new WebChromeClient(){@Override public boolean onConsoleMessage(ConsoleMessage message){Log.w("StarAbyss",message.message()+" ("+message.sourceId()+":"+message.lineNumber()+")");return true;}});

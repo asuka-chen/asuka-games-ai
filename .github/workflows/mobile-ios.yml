@@ -46,14 +46,14 @@ jobs:
           npm --prefix native ci --ignore-scripts
           node scripts/build-mobile.mjs
           python3 scripts/setup-android.py
-          python3 scripts/build-android.py
+          python3 scripts/build-android.py --qa
       - name: Boot Android emulator
         timeout-minutes: 8
         run: bash scripts/boot-android-emulator.sh
       - name: Verify native touch combat
         run: |
           set -o pipefail
-          python3 scripts/smoke-android.py 2>&1 | tee releases/android-smoke.log
+          node scripts/smoke-android.mjs 2>&1 | tee releases/android-smoke.log
       - name: Publish native Android screenshots
         if: always()
         env:
