@@ -22,7 +22,7 @@ stateFile=ROOT/f'releases/native-source-v{VERSION}-state.json';state=json.loads(
 existing=api('GET',f'repos/{REPO}/git/ref/heads/{BRANCH}',missing=True)
 if existing and existing['object']['sha']!=state.get('commit'):raise RuntimeError('Refusing to overwrite an unknown native-build branch')
 files=[ROOT/name for name in ['package.json','package-lock.json','README.md','.gitignore']]
-for directory in ['star-abyss','native','scripts','.github']:
+for directory in ['star-abyss','native','scripts','.github','desktop','tests']:
  files.extend(p for p in (ROOT/directory).rglob('*') if p.is_file() and 'node_modules' not in p.parts and 'www' not in p.parts)
 files=sorted(set(files));entries=[];expected={};binary=[]
 for file in files:

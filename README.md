@@ -1,9 +1,11 @@
 # asuka-games-ai
 是一个用明日香的语气的辅助AI的游戏平台。
 
-## 星渊：无限火力（PC 可玩原型）
+## 星渊：无限火力（PC / Android / iOS 可玩原型）
 
 根据《星渊游戏设计》V1.4 制作的科幻纵版弹幕 Roguelike。包含机库、五种武器、三章分支星图、升级与遗物构筑、节点服务、章节 Boss 和无尽模式。免费 CC0 飞船与音效随游戏本地打包。
+
+手机 V0.13.0：提供离线 Android APK 和已编译的 iOS 未签名 IPA；iOS 安装前须使用自己的 Apple 签名。已加入多点触控摇杆、蓄力射击、闪避、棱镜调角、手机属性栏和横竖屏布局。安装、构建及签名限制见 [手机应用说明](native/README.md)。
 
 Windows 玩家：解压发布压缩包，双击 `Star-Abyss-win32-x64/Star-Abyss.exe`。不需要安装开发工具。操作与存档说明见 [PLAY.md](star-abyss/PLAY.md)。
 

@@ -16,3 +16,5 @@ CC0 许可说明：https://creativecommons.org/publicdomain/zero/1.0/
 原始许可文件完整保留在 `assets/ships/LICENSE.txt`、`assets/audio/LICENSE.txt`。下载时使用公开 Git 仓库、保留 HTTPS 校验，源提交为 `bfc1cd7f6b435f18d318b21746dbfce430ff061c`。
 
 Electron、Chromium 与第三方组件的许可随桌面包保留在其 `LICENSE`、`LICENSES.chromium.html` 中。Kenney 素材的 CC0 许可不代表游戏设计文档或整个项目被重新授权为 CC0。
+
+手机应用图标由原创程序舰船图形生成，不使用第三方商标或付费素材。原生封装代码随项目提供。
