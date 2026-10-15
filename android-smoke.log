@@ -1,0 +1,22 @@
+WebView initial document: {"url":"file:///android_asset/www/index.html","ready":"interactive","scripts":["file:///android_asset/www/game.bundle.js"],"screen":0}
+Native hangar is ready
+Native hangar screenshot captured
+Native difficulty selected
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /蓄满/. Input:
+
+'76%'
+
+    at file:///home/runner/work/asuka-games-ai/asuka-games-ai/scripts/smoke-android.mjs:36:115 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '76%',
+  expected: /蓄满/,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v22.23.3
