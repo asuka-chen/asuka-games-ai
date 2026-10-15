@@ -13,5 +13,5 @@ xcrun simctl install "$task_ios_simulator_id" "$task_ios_simulator_build/Build/P
 xcrun simctl launch "$task_ios_simulator_id" com.asukachen.starabyss
 sleep 8
 xcrun simctl io "$task_ios_simulator_id" screenshot releases/ios-simulator.png
-xcrun simctl spawn "$task_ios_simulator_id" launchctl list | rg 'com.asukachen.starabyss'
+xcrun simctl spawn "$task_ios_simulator_id" launchctl list | python3 -c 'import sys; rows=[line for line in sys.stdin if "com.asukachen.starabyss" in line]; assert rows, "Native app process is not running"; print("".join(rows))'
 xcrun simctl shutdown "$task_ios_simulator_id"
