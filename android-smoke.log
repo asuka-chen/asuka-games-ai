@@ -1,0 +1,11 @@
+WebView initial document: {"url":"file:///android_asset/www/index.html","ready":"interactive","scripts":["file:///android_asset/www/game.bundle.js"],"screen":4792}
+file:///home/runner/work/asuka-games-ai/asuka-games-ai/scripts/smoke-android.mjs:12
+async function send(method,params={}){const id=++sequence;return new Promise((resolve,reject)=>{const timeout=setTimeout(()=>{pending.delete(id);reject(new Error('CDP timed out: '+method));},15000);pending.set(id,{resolve:r=>{clearTimeout(timeout);resolve(r);},reject:e=>{clearTimeout(timeout);reject(e);}});socket.send(JSON.stringify({id,method,params}));});}
+                                                                                                                                                        ^
+
+Error: CDP timed out: Runtime.evaluate
+    at Timeout._onTimeout (file:///home/runner/work/asuka-games-ai/asuka-games-ai/scripts/smoke-android.mjs:12:153)
+    at listOnTimeout (node:internal/timers:585:17)
+    at process.processTimers (node:internal/timers:521:7)
+
+Node.js v22.23.3
