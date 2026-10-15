@@ -1,0 +1,36 @@
+{
+  "version": "0.14.0",
+  "source_commit": "0e67fb7345e72bbf274e434c6fa54e9cb24a48ac",
+  "workflow_url": "https://github.com/asuka-chen/asuka-games-ai/actions/runs/38703191076",
+  "android": {
+    "version_code": 1400,
+    "release_debuggable": false,
+    "release_hardware_acceleration": true,
+    "same_signer_as_0_13": true,
+    "sha256": "d7b7ea675fad0b22af27f2fb1847e6cf0c4615621036f49c63fac07ef011d9e5",
+    "native_qa": "Android 35 emulator, separate debuggable software-rendered QA APK"
+  },
+  "ios": {
+    "minimum_os": "16.0",
+    "signing": "unsigned; requires the owner’s Apple signing before installation",
+    "compiled_platform": "iPhoneOS ARM64",
+    "version_code": 1400,
+    "native_qa": "iPhone Simulator boot, install, launch, screenshot and running app process all passed",
+    "sha256": "b8c8396a11676a7599b7e514dfe2e11cf6b030ec2e708b4b49c2a38ef200c8b5"
+  },
+  "validation": {
+    "rules": {
+      "passed": 196,
+      "failed": 0,
+      "skipped": 0
+    },
+    "defense_browser": "passed: three card faces, artwork, both shop exclusion directions, forge and rendering",
+    "pc_browser": "passed: actual game flow, all four non-beam evolution selections, auto-fire room completion, checkpoint and inspection",
+    "mobile_browser": "11 groups passed: five viewport sizes, real simultaneous touches, charge/release, dash, interruption, modals, rotation, prism, movement and exact offline native bundle",
+    "offline_resources": 176,
+    "physical_device_performance": "not measured",
+    "android_simulator": "passed",
+    "ios_simulator": "passed",
+    "new_mobile_card_text": "all three intros passed flipping, no clipping or horizontal overflow at 320/390 px"
+  }
+}
