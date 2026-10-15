@@ -35,7 +35,7 @@ bash scripts/build-ios.sh
 
 输出在 `releases/`，包括未签名 IPA 及 SHA-256。在 Xcode 打开 `native/ios/StarAbyss.xcodeproj`，进入 Signing & Capabilities 选择自己的 Team，以已连接 iPhone 运行或 Archive / Distribute App。使用团队实际配置签名，不要把证书、描述文件或密码提交到仓库。
 
-GitHub Actions 的 `Build Star Abyss iOS` 工作流可构建未签名 IPA，并启动 iPhone Simulator；Android 任务在 Android 35 模拟器中安装、进入战斗并保存截图。CI 内临时 Android 密钥与本地发布密钥不同，CI 构建仅用于验证。
+GitHub Actions 的 `Build Star Abyss iOS` 工作流可构建未签名 IPA，并启动 iPhone Simulator；Android 任务在 Android 35 模拟器中安装、进入战斗并保存截图。CI 使用开启调试、软件绘制的独立 QA 包，以避开虚拟 GPU 兼容问题；触控测试直接连接实际 Android WebView。正式 APK 禁用调试并使用硬件加速。CI 临时密钥与本地发布密钥不同，QA 包不用于玩家安装。
 
 ## 验证
 

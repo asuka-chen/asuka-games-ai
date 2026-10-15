@@ -16,7 +16,7 @@ async function point(selector){return evaluate(`(()=>{const e=document.querySele
 async function touch(type,points){await send('Input.dispatchTouchEvent',{type,touchPoints:points});}
 async function tap(selector){const p=await point(selector);await touch('touchStart',[{id:1,...p}]);await wait(60);await touch('touchEnd',[]);await wait(100);}
 try{
- command('shell','wm','size','780x1688');command('shell','wm','density','320');command('logcat','-c');
+ command('shell','wm','size','780x1688');command('shell','wm','density','320');command('shell','settings','put','secure','immersive_mode_confirmations','confirmed');command('logcat','-c');
  command('install','--no-incremental','-r',path.join(output,'Star-Abyss-Android-v'+JSON.parse(await (await import('node:fs/promises')).readFile(path.join(root,'package.json'),'utf8')).version+'-qa.apk'));
  command('shell','am','start','-W','-n','com.asukachen.starabyss/.GameActivity');
  let pages=[];
@@ -33,8 +33,8 @@ try{
  await until(`document.body.dataset.gamePage==='battle'&&Boolean(document.querySelector('[data-touch="fire"]'))`,'combat');
  assert.equal(await evaluate(`document.body.classList.contains('mobile-ui')`),true);await wait(1000);await screenshot('android-native-battle.png');
  await tap('[data-touch="fire"]');await wait(1100);await tap('[data-touch="fire"]');await wait(1000);
- const fire=await point('[data-touch="fire"]');await touch('touchStart',[{id:1,...fire}]);await wait(1800);assert.match(await evaluate(`document.getElementById('mobile-charge').textContent`),/蓄满/);await touch('touchEnd',[]);await wait(100);assert.equal(await evaluate(`document.querySelector('[data-touch="auto"]').getAttribute('aria-pressed')`),'false');
- await tap('[data-touch="dash"]');assert.match(await evaluate(`document.getElementById('touch-dash-status').textContent`),/0\/1/);
+ const fire=await point('[data-touch="fire"]');await touch('touchStart',[{id:1,...fire}]);await until(`/蓄满/.test(document.getElementById('mobile-charge').textContent)`,'full held charge');await wait(500);assert.match(await evaluate(`document.getElementById('mobile-charge').textContent`),/蓄满/);await touch('touchEnd',[]);await wait(100);assert.equal(await evaluate(`document.querySelector('[data-touch="auto"]').getAttribute('aria-pressed')`),'false');
+ await tap('[data-touch="dash"]');await until(`document.getElementById('touch-dash-status').textContent.startsWith('0/1')`,'dash charge consumed');assert.match(await evaluate(`document.getElementById('touch-dash-status').textContent`),/0\/1/);
  await tap('[data-touch="pause"]');await until(`Boolean(document.querySelector('.modal-head'))`,'pause');assert.match(await evaluate(`document.querySelector('.modal-head').textContent`),/作战暂停/);
  assert.deepEqual(errors,[]);await screenshot('android-native-paused.png');console.log('PASS: native offline Android WebView opens, enters combat, accepts touch charging/release/dash and pauses without JavaScript errors');
 }finally{
