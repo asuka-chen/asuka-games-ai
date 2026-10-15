@@ -1,0 +1,35 @@
+{
+  "version": "0.13.0",
+  "source_commit": "f53b300fa91297ec64778d1a18834c6f29e1d8e0",
+  "source_branch": "star-abyss-mobile-build-v0.13.0",
+  "built_at_utc": "2026-10-15T04:24:08.745312+00:00",
+  "android": {
+    "minimum_os": "Android 9",
+    "target_sdk": 35,
+    "signing": "self-signed test APK",
+    "release_debuggable": false,
+    "native_qa_workflow_run": 38680835674,
+    "native_qa_result": "passed",
+    "native_qa_flavor": "debug-only APK with software rendering on Android 35 emulator; same application source and offline assets",
+    "release_sha256": "e26c5eb633ec2c3b3591a343088fc6e21d14c8e3e59a0781aee7346d0ad06bde"
+  },
+  "ios": {
+    "minimum_os": "iOS 16",
+    "platform": "iPhoneOS ARM64",
+    "signing": "unsigned; Apple signing is required to install",
+    "build_source_commit": "ef3d092c6168b43aee70959229ade9481b741551",
+    "mac_build_and_simulator_workflow_run": 38679136032,
+    "native_qa_result": "passed launch and visual inspection",
+    "source_inputs_matched": 201,
+    "offline_resource_files_matched": 173,
+    "release_sha256": "785448e7de01ec535a5e865c1eb91cd33747204feaadc94be4ac369adff738f5"
+  },
+  "checks": {
+    "rule_tests_passed": 186,
+    "mobile_browser_scenarios_passed": 11,
+    "pc_keyboard_mouse_regression": "passed",
+    "pc_gameplay_regression": "passed",
+    "zip_crc_and_package_checksums": "passed"
+  },
+  "physical_phone_performance": "not yet verified"
+}
