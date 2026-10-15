@@ -1,0 +1,5 @@
+WebView initial document: {"url":"file:///android_asset/www/index.html","ready":"interactive","scripts":["file:///android_asset/www/game.bundle.js"],"screen":0}
+Native hangar is ready
+Native hangar screenshot captured
+Native difficulty selected
+PASS: native offline Android WebView opens, enters combat, accepts touch charging/release/dash and pauses without JavaScript errors
