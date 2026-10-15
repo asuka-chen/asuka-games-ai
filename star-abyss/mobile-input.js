@@ -8,7 +8,7 @@ export class TouchControls{
   const listen=(el,type,fn)=>{el.addEventListener(type,fn,{passive:false});this.listeners.push(()=>el.removeEventListener(type,fn));};
   for(const button of root.querySelectorAll('[data-touch]')){
    const action=button.dataset.touch;
-   if(['auto','pause','build'].includes(action)){const invoke=()=>({auto:onAuto,pause:onPause,build:onBuild})[action]();listen(button,'pointerdown',event=>{if(event.pointerType==='touch'){event.preventDefault();invoke();}});listen(button,'click',event=>{if(event.pointerType!=='touch'&&!event.sourceCapabilities?.firesTouchEvents)invoke();});continue;}
+   if(['auto','pause','build'].includes(action)){let touchActivatedAt=-Infinity;const invoke=()=>({auto:onAuto,pause:onPause,build:onBuild})[action]();listen(button,'pointerdown',event=>{if(event.pointerType==='touch'){event.preventDefault();touchActivatedAt=performance.now();invoke();}});listen(button,'click',event=>{if(performance.now()-touchActivatedAt>750&&event.pointerType!=='touch'&&!event.sourceCapabilities?.firesTouchEvents)invoke();});continue;}
    listen(button,'pointerdown',event=>{if(event.pointerType!=='touch'||button.disabled||[...this.held.values()].includes(action))return;event.preventDefault();button.setPointerCapture(event.pointerId);this.held.set(event.pointerId,action);button.classList.add('pressed');if(action==='fire'){this.fireQueued=true;onManual();}if(action==='dash')this.dashQueued=true;});
    const end=event=>{if(!this.held.has(event.pointerId))return;const action=this.held.get(event.pointerId);this.held.delete(event.pointerId);button.classList.remove('pressed');if(event.type!=='pointerup')this.cancel();};
    for(const type of ['pointerup','pointercancel','lostpointercapture'])listen(button,type,end);
