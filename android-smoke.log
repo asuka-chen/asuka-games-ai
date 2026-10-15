@@ -1,0 +1,22 @@
+Serving...
+All files should be loaded. Notifying the device.
+Performing Incremental Install
+Success
+Install command complete in 3496 ms
+Starting: Intent { cmp=com.asukachen.starabyss/.GameActivity }
+Status: ok
+LaunchState: COLD
+Activity: com.asukachen.starabyss/.GameActivity
+TotalTime: 2280
+WaitTime: 2356
+Complete
+Traceback (most recent call last):
+  File "/home/runner/work/asuka-games-ai/asuka-games-ai/scripts/smoke-android.py", line 24, in <module>
+    for _ in range(6):adb('shell','input','swipe','400','1400','400','300','200')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/asuka-games-ai/asuka-games-ai/scripts/smoke-android.py", line 7, in adb
+    return subprocess.run([str(ADB),*args],check=True,capture_output=capture,text=capture,timeout=60)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/usr/local/lib/android/sdk/platform-tools/adb', 'shell', 'input', 'swipe', '400', '1400', '400', '300', '200']' returned non-zero exit status 255.
