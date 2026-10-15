@@ -32,11 +32,13 @@ try{
  const route=await evaluate(`[...document.querySelectorAll('.route-card')].find(e=>/普通战斗|裂隙/.test(e.textContent))?.dataset.id`);assert.ok(route,'A playable opening combat route must exist');await tap('.route-card[data-id="'+route+'"]');
  await until(`document.body.dataset.gamePage==='battle'&&Boolean(document.querySelector('[data-touch="fire"]'))`,'combat');
  assert.equal(await evaluate(`document.body.classList.contains('mobile-ui')`),true);await wait(1000);await screenshot('android-native-battle.png');
- await tap('[data-touch="fire"]');await wait(1100);await tap('[data-touch="fire"]');await wait(1000);
- const fire=await point('[data-touch="fire"]');await touch('touchStart',[{id:1,...fire}]);await until(`/蓄满/.test(document.getElementById('mobile-charge').textContent)`,'full held charge');await wait(500);assert.match(await evaluate(`document.getElementById('mobile-charge').textContent`),/蓄满/);await touch('touchEnd',[]);await wait(100);assert.equal(await evaluate(`document.querySelector('[data-touch="auto"]').getAttribute('aria-pressed')`),'false');
+ // Verify defensive controls before the first beam can kill enemies and open an upgrade choice.
  await tap('[data-touch="dash"]');await until(`document.getElementById('touch-dash-status').textContent.startsWith('0/1')`,'dash charge consumed');assert.match(await evaluate(`document.getElementById('touch-dash-status').textContent`),/0\/1/);
- await tap('[data-touch="pause"]');await until(`Boolean(document.querySelector('.modal-head'))`,'pause');assert.match(await evaluate(`document.querySelector('.modal-head').textContent`),/作战暂停/);
- assert.deepEqual(errors,[]);await screenshot('android-native-paused.png');console.log('PASS: native offline Android WebView opens, enters combat, accepts touch charging/release/dash and pauses without JavaScript errors');
+ await tap('[data-touch="pause"]');await until(`Boolean(document.querySelector('.modal-head'))`,'pause');assert.match(await evaluate(`document.querySelector('.modal-head').textContent`),/作战暂停/);await screenshot('android-native-paused.png');
+ await tap('[data-modal="resume"]');await until(`!document.querySelector('.modal-head')`,'resume');
+ await tap('[data-touch="fire"]');await wait(1100);
+ const fire=await point('[data-touch="fire"]');await touch('touchStart',[{id:1,...fire}]);await until(`/蓄满/.test(document.getElementById('mobile-charge').textContent)`,'full held charge');await wait(500);assert.match(await evaluate(`document.getElementById('mobile-charge').textContent`),/蓄满/);await touch('touchEnd',[]);await until(`document.getElementById('mobile-charge').textContent==='0%'`,'real touch-up release');assert.equal(await evaluate(`document.querySelector('[data-touch="auto"]').getAttribute('aria-pressed')`),'false');
+ assert.deepEqual(errors,[]);await screenshot('android-native-fired.png');console.log('PASS: native offline Android WebView opens, enters combat, accepts touch charging/release/dash and pauses without JavaScript errors');
 }finally{
  if(socket?.readyState===1)socket.close();
  for(const [name,args] of [['android-console.log',['logcat','-d','-s','chromium','AndroidRuntime','StarAbyss']],['android-webview.log',['shell','dumpsys','webviewupdate']]]){try{await writeFile(path.join(output,name),command(...args));}catch{}}
