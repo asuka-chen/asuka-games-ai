@@ -3,9 +3,13 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 mkdir -p releases
 exec > >(tee releases/android-emulator.log) 2>&1
+export ANDROID_AVD_HOME="$(pwd)/.cache/android-avd"
+mkdir -p "$ANDROID_AVD_HOME"
 sudo chmod a+rw /dev/kvm
 "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'system-images;android-35;google_apis;x86_64'
-echo no | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd --force --name star-abyss-qa --package 'system-images;android-35;google_apis;x86_64' --device pixel_5
+echo no | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd --force --name star-abyss-qa --package 'system-images;android-35;google_apis;x86_64' --device pixel_5 --path "$ANDROID_AVD_HOME/star-abyss-qa.avd"
+test -f "$ANDROID_AVD_HOME/star-abyss-qa.ini"
+"$ANDROID_HOME/emulator/emulator" -list-avds
 "$ANDROID_HOME/emulator/emulator" -avd star-abyss-qa -no-window -no-audio -no-boot-anim -no-snapshot -gpu swiftshader_indirect -memory 2048 -no-metrics > releases/android-emulator-process.log 2>&1 &
 task_android_emulator_pid=$!
 timeout 180 "$ANDROID_HOME/platform-tools/adb" wait-for-device
