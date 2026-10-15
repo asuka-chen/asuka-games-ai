@@ -1,0 +1,39 @@
+{
+  "name": "star-abyss",
+  "version": "0.13.0",
+  "description": "星渊：无限火力 — a sci-fi branching-map bullet-hell roguelike",
+  "private": true,
+  "type": "module",
+  "main": "desktop/main.cjs",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "desktop": "electron .",
+    "test": "node --test tests/*.test.js",
+    "test:browser": "node tests/browser.mjs",
+    "test:visual": "node tests/visual-browser.mjs",
+    "test:boss": "node tests/boss-browser.mjs",
+    "test:art": "node tests/art-browser.mjs",
+    "test:progression": "node tests/progression-browser.mjs",
+    "test:controls": "node tests/controls-browser.mjs",
+    "report:evolutions": "node scripts/evolution-audit.mjs",
+    "report:pressure": "node scripts/pressure-report.mjs",
+    "report:balance": "node scripts/balance-report.mjs",
+    "build:win": "node scripts/package-desktop.mjs win32",
+    "build:linux": "node scripts/package-desktop.mjs linux",
+    "test:growth": "node tests/growth-browser.mjs",
+    "test:endless": "node tests/endless-browser.mjs",
+    "test:space": "node tests/space-preview-browser.mjs",
+    "test:contracts": "node tests/contracts-browser.mjs",
+    "report:endless": "node scripts/endless-balance-report.mjs",
+    "build:mobile": "node scripts/build-mobile.mjs",
+    "build:android": "python scripts/build-android.py",
+    "build:ios": "bash scripts/build-ios.sh",
+    "test:mobile": "node tests/mobile-browser.mjs"
+  },
+  "devDependencies": {
+    "@electron/get": "5.1.0",
+    "@electron/packager": "20.5.0",
+    "electron": "44.7.0",
+    "playwright": "1.62.1"
+  }
+}

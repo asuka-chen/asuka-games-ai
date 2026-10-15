@@ -1,0 +1,9 @@
+{
+  "name": "star-abyss-native-build",
+  "version": "0.13.0",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "esbuild": "0.25.12"
+  }
+}

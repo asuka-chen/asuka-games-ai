@@ -1,0 +1,26 @@
+name: Build Star Abyss iOS
+on:
+  push:
+    branches:
+      - 'star-abyss-mobile-build-v*'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  ios:
+    runs-on: macos-15
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Install isolated native bundler
+        run: npm --prefix native ci --ignore-scripts
+      - name: Build offline iOS app and unsigned IPA
+        run: bash scripts/build-ios.sh
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: Star-Abyss-iOS-unsigned
+          path: |
+            releases/*-unsigned.ipa
+            releases/*-unsigned.ipa.sha256
+          if-no-files-found: error
+          retention-days: 14

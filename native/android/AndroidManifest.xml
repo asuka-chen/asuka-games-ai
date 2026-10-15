@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.asukachen.starabyss" android:versionCode="1300" android:versionName="0.13.0">
+  <uses-sdk android:minSdkVersion="28" android:targetSdkVersion="35"/>
+  <uses-feature android:name="android.hardware.touchscreen" android:required="true"/>
+  <application android:theme="@android:style/Theme.Material.NoActionBar" android:label="星渊：无限火力" android:icon="@drawable/app_icon" android:allowBackup="true" android:supportsRtl="true" android:usesCleartextTraffic="false" android:enableOnBackInvokedCallback="false">
+    <activity android:name=".GameActivity" android:exported="true" android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize" android:screenOrientation="fullSensor">
+      <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
+    </activity>
+  </application>
+</manifest>
