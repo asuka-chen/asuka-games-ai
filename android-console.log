@@ -1,0 +1,11 @@
+--------- beginning of main
+10-15 03:56:24.449  1801  1894 I chromium: [1015/035624.444406:INFO:variations_seed_loader.cc(66)] Failed to open file for reading.: No such file or directory (2)
+10-15 03:56:24.452  1801  1894 I chromium: [INFO:variations_seed_loader.cc(66)] Failed to open file for reading.: No such file or directory (2)
+10-15 03:56:24.689  1801  1911 W chromium: [WARNING:dns_config_service_android.cc(81)] Failed to read DnsConfig.
+10-15 03:56:25.153  1326  1970 W chromium: [1015/035625.153278:WARNING:dns_config_service_android.cc(81)] Failed to read DnsConfig.
+10-15 03:56:25.553  1945  1990 W chromium: [WARNING:runtime_features.cc(694)] SharedStorage for M118+ cannot be enabled in this configuration. Use --enable-features=SharedStorageAPI,SharedStorageAPIM118 in addition.
+10-15 03:56:25.553  1945  1990 W chromium: [WARNING:runtime_features.cc(730)] AttributionReportingCrossAppWeb cannot be enabled in this configuration. Use --enable-features=ConversionMeasurement,AttributionReportingCrossAppWeb in addition.
+10-15 03:56:26.358  1945  1990 I chromium: [INFO:viewport_data.cc(133)] E2E_Used ViewportFitCover
+10-15 03:56:26.374  1945  1990 I chromium: [INFO:viewport_data.cc(133)] E2E_Used ViewportFitCover
+10-15 03:56:26.466  1234  2044 W chromium: [1015/035626.464264:WARNING:dns_config_service_android.cc(81)] Failed to read DnsConfig.
+10-15 03:56:39.375  2284  2631 W chromium: [1015/035639.368356:WARNING:dns_config_service_android.cc(81)] Failed to read DnsConfig.
