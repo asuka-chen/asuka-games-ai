@@ -4,7 +4,7 @@ from zipfile import ZipFile,ZIP_DEFLATED
 import os,subprocess,shutil,secrets,json,hashlib
 ROOT=Path(__file__).resolve().parent.parent
 SDK=ROOT/'.cache/android-sdk';TOOLS=SDK/'build-tools/35.0.0';ANDROID=SDK/'platforms/android-35/android.jar'
-BUILD=ROOT/'releases/android-build';BUILD.mkdir(parents=True,exist_ok=True)
+BUILD=ROOT/'releases/android-build';shutil.rmtree(BUILD,ignore_errors=True);BUILD.mkdir(parents=True,exist_ok=True)
 def run(args):subprocess.run([str(a) for a in args],check=True,cwd=ROOT)
 assert ANDROID.exists(),'Run python scripts/setup-android.py first'
 assert (ROOT/'releases/mobile-www/game.bundle.js').exists(),'Run node scripts/build-mobile.mjs first'

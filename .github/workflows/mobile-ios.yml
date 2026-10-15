@@ -16,11 +16,48 @@ jobs:
         run: npm --prefix native ci --ignore-scripts
       - name: Build offline iOS app and unsigned IPA
         run: bash scripts/build-ios.sh
+      - name: Launch the real app in iPhone Simulator
+        run: bash scripts/smoke-ios.sh
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: Star-Abyss-iOS-unsigned
           path: |
             releases/*-unsigned.ipa
             releases/*-unsigned.ipa.sha256
+            releases/ios-simulator.png
           if-no-files-found: error
+          retention-days: 14
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Build the offline Android app
+        run: |
+          npm --prefix native ci --ignore-scripts
+          node scripts/build-mobile.mjs
+          python3 scripts/setup-android.py
+          python3 scripts/build-android.py
+      - name: Boot Android emulator
+        run: |
+          sudo chmod a+rw /dev/kvm
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'system-images;android-35;google_apis;x86_64'
+          echo no | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd --name star-abyss-qa --package 'system-images;android-35;google_apis;x86_64' --device pixel_5
+          "$ANDROID_HOME/emulator/emulator" -avd star-abyss-qa -no-window -no-audio -no-boot-anim -no-snapshot -gpu swiftshader_indirect -memory 2048 -no-metrics > /tmp/star-abyss-emulator.log 2>&1 &
+          "$ANDROID_HOME/platform-tools/adb" wait-for-device
+          for attempt in $(seq 1 120); do
+            if [ "$("$ANDROID_HOME/platform-tools/adb" shell getprop sys.boot_completed | tr -d '\r')" = 1 ]; then break; fi
+            sleep 2
+          done
+          test "$("$ANDROID_HOME/platform-tools/adb" shell getprop sys.boot_completed | tr -d '\r')" = 1
+      - name: Verify native touch combat
+        run: python3 scripts/smoke-android.py
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: Star-Abyss-Android-QA
+          path: |
+            releases/android-native-*.png
+            releases/android-ui.xml
+          if-no-files-found: warn
           retention-days: 14

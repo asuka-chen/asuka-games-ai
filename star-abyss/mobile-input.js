@@ -1,5 +1,6 @@
 // Multi-touch controls share the same fixed-step input used by keyboard and gamepad.
-export function touchDevice(){return matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0;}
+let touchCapability=false;
+export function touchDevice(){touchCapability=touchCapability||matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0;return touchCapability;}
 export function stickVector(dx,dy,radius=46){const distance=Math.hypot(dx,dy);if(distance<6)return{x:0,y:0,knobX:dx,knobY:dy};const scale=Math.min(1,distance/radius);return{x:dx/distance*scale,y:dy/distance*scale,knobX:dx/distance*Math.min(radius,distance),knobY:dy/distance*Math.min(radius,distance)};}
 export class TouchControls{
  constructor(root,canvas,{player,onManual,onCancel,onAuto,onPause,onBuild}){
@@ -21,7 +22,7 @@ export class TouchControls{
   for(const el of [stick,canvas])for(const type of ['pointerup','pointercancel','lostpointercapture'])listen(el,type,endMove);
  }
  moveStick(event){if(this.move?.kind!=='stick')return;const v=stickVector(event.clientX-this.move.x,event.clientY-this.move.y,this.move.radius);this.vector={x:v.x,y:v.y};this.knob.style.transform=`translate(${v.knobX}px,${v.knobY}px)`;}
- read(){const actions=new Set(this.held.values()),result={...this.vector,pointer:this.target,fire:actions.has('fire')||this.fireQueued,dash:actions.has('dash')||this.dashQueued,aim:Number(actions.has('right'))-Number(actions.has('left'))};this.fireQueued=false;this.dashQueued=false;return result;}
+ read(){const actions=new Set(this.held.values()),result={...this.vector,pointer:this.target,fire:actions.has('fire')||this.fireQueued,dash:actions.has('dash')||this.dashQueued,dashPressed:this.dashQueued,aim:Number(actions.has('right'))-Number(actions.has('left'))};this.fireQueued=false;this.dashQueued=false;return result;}
  cancel(){this.reset();this.callbacks.onCancel();}
  reset(){this.held.clear();this.move=null;this.target=null;this.vector={x:0,y:0};this.fireQueued=false;this.dashQueued=false;this.knob.style.transform='translate(0px,0px)';this.root.querySelectorAll('.pressed').forEach(el=>el.classList.remove('pressed'));}
  destroy(){this.reset();for(const remove of this.listeners)remove();this.listeners=[];}

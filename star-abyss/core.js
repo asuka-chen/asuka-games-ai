@@ -490,7 +490,7 @@ export class Battle{
   if(Math.floor(this.time)!==this.procSecond){this.procBudget=0;this.procSecond=Math.floor(this.time);}
   p.invincible=Math.max(0,p.invincible-dt);p.dash=Math.max(0,p.dash-dt);this.shake=Math.max(0,this.shake-dt*20);
   const dash=dashStats(r);p.dashCharges=Math.min(p.dashCharges,dash.charges);if(!dash.charges)p.dashCD=0;else if(p.dashCharges<dash.charges){p.dashCD-=dt;while(p.dashCD<=0&&p.dashCharges<dash.charges){p.dashCharges++;p.dashCD+=dash.cooldown;}if(p.dashCharges===dash.charges)p.dashCD=0;}
-  if(input.dash&&!p.dashHeld&&p.dashCharges>0){p.dashCharges--;p.dash=dash.duration;p.invincible=Math.max(p.invincible,dash.duration);if(p.dashCD<=0)p.dashCD=dash.cooldown;this.afterimageClock=0;this.addAfterimage('dash',p.x,p.y,.48);}p.dashHeld=Boolean(input.dash);
+  if((input.dashPressed||(input.dash&&!p.dashHeld))&&p.dashCharges>0){p.dashCharges--;p.dash=dash.duration;p.invincible=Math.max(p.invincible,dash.duration);if(p.dashCD<=0)p.dashCD=dash.cooldown;this.afterimageClock=0;this.addAfterimage('dash',p.x,p.y,.48);}p.dashHeld=Boolean(input.dash);
   const a=attributes(r),speed=a.speed*(p.dash>0?2.2:1)*(p.stored?.92:1);let dx=input.x||0,dy=input.y||0;
   if(input.pointer&&Math.hypot(input.pointer.x-p.x,input.pointer.y-p.y)>5){dx=clamp((input.pointer.x-p.x)/30,-1,1);dy=clamp((input.pointer.y-p.y)/30,-1,1);}
   const oldX=p.x,oldY=p.y,mag=Math.max(1,Math.hypot(dx,dy));p.x=clamp(p.x+dx/mag*speed*dt,25,W-25);p.y=clamp(p.y+dy/mag*speed*dt,60,H-35);

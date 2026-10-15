@@ -1,3 +1,4 @@
+import {touchDevice} from './mobile-input.js';
 import { W,H,beamStats,attributes,targetDamageTaken } from './core.js';
 import { REGIONS } from './data.js';
 import {ELEMENT_STYLE,drawElementMark,drawElementStatus,drawElementEffect} from './element-visuals.js';
@@ -11,7 +12,7 @@ export const sprites={};
 const filenames=['playerShip1_blue.png','playerShip1_green.png','playerShip1_orange.png','playerShip2_orange.png','playerShip3_orange.png','meteorGrey_big1.png','laserBlue01.png'];
 export const assetsReady=Promise.all(filenames.map(name=>new Promise(resolve=>{const img=new Image();img.onload=()=>{sprites[name]=img;resolve();};img.onerror=resolve;img.src=new URL(`assets/ships/${name}`,import.meta.url).href;})));
 export function initCosmos(canvas){const ctx=canvas.getContext('2d');let width=0,height=0;function resize(){width=innerWidth;height=innerHeight;canvas.width=width;canvas.height=height;}resize();addEventListener('resize',resize);return time=>drawSpace(ctx,width,height,time,0);}
-export function prepareCanvas(canvas){const touch=matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0,dpr=touch?Math.min(1.25,Math.max(.7,(canvas.getBoundingClientRect().width||720)*(devicePixelRatio||1)/W)):Math.min(devicePixelRatio||1,2);canvas.width=W*dpr;canvas.height=H*dpr;const ctx=canvas.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);return ctx;}
+export function prepareCanvas(canvas){const touch=touchDevice(),dpr=touch?Math.min(1.25,Math.max(.7,(canvas.getBoundingClientRect().width||720)*(devicePixelRatio||1)/W)):Math.min(devicePixelRatio||1,2);canvas.width=W*dpr;canvas.height=H*dpr;const ctx=canvas.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);return ctx;}
 function line(ctx,points,color,width=1){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(points[0],points[1]);ctx.lineTo(points[2],points[3]);ctx.stroke();}
 function ring(ctx,x,y,r,color,width=1){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.stroke();}
 export function renderBattle(ctx,b){
