@@ -1,0 +1,67 @@
+name: Build Star Abyss iOS
+on:
+  push:
+    branches:
+      - 'star-abyss-mobile-build-v*'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  ios:
+    if: ${{ !contains(github.event.head_commit.message, '[android-only]') }}
+    runs-on: macos-15
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Install isolated native bundler
+        run: npm --prefix native ci --ignore-scripts
+      - name: Build offline iOS app and unsigned IPA
+        run: bash scripts/build-ios.sh
+      - name: Launch the real app in iPhone Simulator
+        timeout-minutes: 8
+        run: bash scripts/smoke-ios.sh
+      - name: Publish downloadable native artifacts
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 scripts/publish-native-artifact.py ios
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: Star-Abyss-iOS-unsigned
+          path: |
+            releases/*-unsigned.ipa
+            releases/*-unsigned.ipa.sha256
+            releases/ios-simulator.png
+          if-no-files-found: error
+          retention-days: 14
+  android:
+    concurrency:
+      group: star-abyss-android-${{ github.ref }}
+      cancel-in-progress: true
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Build the offline Android app
+        run: |
+          npm --prefix native ci --ignore-scripts
+          node scripts/build-mobile.mjs
+          python3 scripts/setup-android.py
+          python3 scripts/build-android.py --qa
+      - name: Boot Android and verify native touch combat
+        timeout-minutes: 10
+        run: bash scripts/boot-android-emulator.sh
+      - name: Publish native Android screenshots
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 scripts/publish-native-artifact.py android
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: Star-Abyss-Android-QA
+          path: |
+            releases/android-native-*.png
+            releases/android-ui.xml
+          if-no-files-found: warn
+          retention-days: 14

@@ -1,0 +1,7 @@
+node_modules/
+releases/
+.cache/
+test-results/
+*.log
+
+native/ios/www/
