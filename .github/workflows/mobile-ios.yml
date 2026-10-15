@@ -51,7 +51,9 @@ jobs:
         timeout-minutes: 8
         run: bash scripts/boot-android-emulator.sh
       - name: Verify native touch combat
-        run: python3 scripts/smoke-android.py 2>&1 | tee releases/android-smoke.log
+        run: |
+          set -o pipefail
+          python3 scripts/smoke-android.py 2>&1 | tee releases/android-smoke.log
       - name: Publish native Android screenshots
         if: always()
         env:

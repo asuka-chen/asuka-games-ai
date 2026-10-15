@@ -10,6 +10,8 @@ import android.view.WindowInsets;
 import android.view.DisplayCutout;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
+import android.webkit.ConsoleMessage;
+import android.util.Log;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -28,7 +30,7 @@ public final class GameActivity extends Activity {
     FrameLayout frame=new FrameLayout(this);frame.setBackgroundColor(Color.rgb(6,12,23));
     game=new WebView(this);game.setBackgroundColor(Color.rgb(6,12,23));
     WebSettings settings=game.getSettings();settings.setJavaScriptEnabled(true);settings.setDomStorageEnabled(true);settings.setMediaPlaybackRequiresUserGesture(false);settings.setAllowFileAccess(false);settings.setAllowContentAccess(false);settings.setAllowFileAccessFromFileURLs(false);settings.setAllowUniversalAccessFromFileURLs(false);settings.setSupportZoom(false);settings.setBuiltInZoomControls(false);settings.setDisplayZoomControls(false);
-    game.setWebChromeClient(new WebChromeClient());
+    game.setWebChromeClient(new WebChromeClient(){@Override public boolean onConsoleMessage(ConsoleMessage message){Log.w("StarAbyss",message.message()+" ("+message.sourceId()+":"+message.lineNumber()+")");return true;}});
     game.setWebViewClient(new WebViewClient(){@Override public boolean shouldOverrideUrlLoading(WebView view,WebResourceRequest request){return !request.getUrl().toString().startsWith("file:///android_asset/www/");}});
     game.addJavascriptInterface(new NativeActions(),"NativeBridge");
     frame.addView(game,new FrameLayout.LayoutParams(-1,-1));setContentView(frame);
