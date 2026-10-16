@@ -1,0 +1,60 @@
+{
+  "version": "0.16.0",
+  "versionCode": 1600,
+  "packageName": "com.asukachen.starabyss",
+  "candidate": "device-test",
+  "apk": "Star-Abyss-Android-v0.16.0-ads.apk",
+  "apkBytes": 7465328,
+  "apkSha256": "fc9a7544544a1dc0fca1cb60c11888fc5e7fcc36e0c18ba7459a1d64046ca45e",
+  "signingCertificateSha256": "a1b1f80d161d88f954241c44c4b40f1fc3295b3df45036577cd1f7ae99385990",
+  "sdk": {
+    "version": "5.3.0.4",
+    "coreFilename": "DirichletAD_Mediation_5.3.0.4.aar",
+    "coreSha256": "7bb90a7eab53d72cf7ce014ebac76d6ca35d6cb94caa68331d84142264f04a26",
+    "channel": "TapADN",
+    "optionalAdapters": []
+  },
+  "minSdk": 28,
+  "targetSdk": 35,
+  "abis": [
+    "arm64-v8a",
+    "armeabi-v7a"
+  ],
+  "permissions": [
+    "android.permission.ACCESS_NETWORK_STATE",
+    "android.permission.INTERNET"
+  ],
+  "validation": {
+    "realSdkDebugCompilation": true,
+    "r8Release": true,
+    "originalSigningCertificate": true,
+    "zipIntegrity": true,
+    "apk16kAlignment": true,
+    "sdkArmElf16kAlignment": true,
+    "sdkResourcesPresent": true,
+    "productionDebugDisabled": true,
+    "nodeTests": 220,
+    "javaStateScenarios": 9,
+    "mockBridgeBrowserScenarios": 5,
+    "mobileBrowserScenarios": 11,
+    "actualDeviceAds": false,
+    "actualRevenueVerification": false,
+    "upgradeAdBrowserScenarios": 5,
+    "gameBrowserScenarios": 17,
+    "actualDeviceUpgradeAds": false
+  },
+  "remainingValidation": [
+    "Verify V0.16.0 upgrade rewarded videos and early close on a real Android ARM phone",
+    "Consent, disable, no-fill, landing-page return and background changes on a real device",
+    "Install over actual TapTap version and preserve saves",
+    "Platform revenue and server-side reward verification"
+  ],
+  "gameBundleSha256": "4f0272afb1d0ed78569a95a1238998d85b5b6bdcf4f77d2256b6d075c591a1bd",
+  "previousVersionDeviceFeedback": "User confirmed actual rewarded videos playable on V0.15.0; this is feedback, not device validation of the V0.16.0 upgrade flow.",
+  "features": [
+    "Prominent optional ad benefits and single-page native consent",
+    "120 coins per layer, half-health revive once per run",
+    "One verified rewarded refresh per upgrade choice; preserves ordinary rerolls; guarantees a new option",
+    "No resource, RNG or candidate changes for incomplete ads; battle remains paused until upgrade selection"
+  ]
+}
