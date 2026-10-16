@@ -1,0 +1,50 @@
+{
+  "version": "0.15.0",
+  "versionCode": 1500,
+  "packageName": "com.asukachen.starabyss",
+  "candidate": "device-test",
+  "apk": "Star-Abyss-Android-v0.15.0-ads.apk",
+  "apkBytes": 7463140,
+  "apkSha256": "638b40ecbe10919970abab5ef9584bc5a7e915a43297fde0dd8e39f783432149",
+  "signingCertificateSha256": "a1b1f80d161d88f954241c44c4b40f1fc3295b3df45036577cd1f7ae99385990",
+  "sdk": {
+    "version": "5.3.0.4",
+    "coreFilename": "DirichletAD_Mediation_5.3.0.4.aar",
+    "coreSha256": "7bb90a7eab53d72cf7ce014ebac76d6ca35d6cb94caa68331d84142264f04a26",
+    "channel": "TapADN",
+    "optionalAdapters": []
+  },
+  "minSdk": 28,
+  "targetSdk": 35,
+  "abis": [
+    "arm64-v8a",
+    "armeabi-v7a"
+  ],
+  "permissions": [
+    "android.permission.ACCESS_NETWORK_STATE",
+    "android.permission.INTERNET"
+  ],
+  "validation": {
+    "realSdkDebugCompilation": true,
+    "r8Release": true,
+    "originalSigningCertificate": true,
+    "zipIntegrity": true,
+    "apk16kAlignment": true,
+    "sdkArmElf16kAlignment": true,
+    "sdkResourcesPresent": true,
+    "productionDebugDisabled": true,
+    "nodeTests": 213,
+    "javaStateScenarios": 8,
+    "mockBridgeBrowserScenarios": 5,
+    "mobileBrowserScenarios": 11,
+    "actualDeviceAds": false,
+    "actualRevenueVerification": false
+  },
+  "remainingValidation": [
+    "Real Android ARM video presentation and no-fill",
+    "Consent before initialization, disable and resume on a real device",
+    "Verified reward, early close, landing-page return and delayed callbacks",
+    "Install over the actual TapTap version and preserve saves"
+  ],
+  "gameBundleSha256": "ee36f3db4571dec4018adb91c67938e74805613dd8f97aed82d401ca8e5bb2c1"
+}
